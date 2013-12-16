@@ -4,9 +4,10 @@
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-	<title>Document</title>
+	<title>使用uploadify 上传插件demo</title>
 	<link rel="stylesheet" href="../lib/css/base_style.css"/>
 	<link rel="stylesheet" href="../lib/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/uploadify.css">
 	<!-- 结合selectivizr.js使IE8兼容css3选择器 注意它只对在单独的样式文件中有效 -->
 	<!--[if lt IE 9]>
 		<script src='../lib/css/html5Shiv.js'></script>
@@ -22,6 +23,7 @@
 	
 	<button class="btn btn-danger" id="file_upload"></button>
 	
+	<input type="file" name="" id="filebtn">
 
 
 
@@ -31,5 +33,18 @@
 	<script src='../lib/js/bootstrap.min.js' ></script>
 	<script src='../lib/js/jquery.easing.1.3.js'></script>
 	<script src='../lib/js/jquery.mousewheel.js'></script>
+	<script src='js/jquery.uploadify.min.js'></script>
+
+	<!-- Markdown 渲染器 -->
+	<script src='../vender/strapdown.js'></script>
+
+	<script>
+		$(document).ready(function(){
+			$('#filebtn').uploadify(
+				'swf'       : "uploadify.swf",
+				'uploader' : 'upload.php'
+			);
+		});
+	</script>
 </body>
 </html>
