@@ -1,0 +1,1 @@
+##注意uploadify插件已包含常用的flash插件:SWFObject v2.2
