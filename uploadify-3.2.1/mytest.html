@@ -15,15 +15,54 @@
 		<script src='../lib/css/nwmatcher.js'></script>
 		<script src='../lib/css/selectivizr.js'></script>
 	<![endif]-->
+
+	<style>
+		.mybutton{
+			background-color: transparent;
+			-webkit-border-radius: 0px;
+			-moz-border-radius: 0px;
+			border-radius: 0px;
+			border: 0px solid transparent;
+		}
+		.upload-img-list{
+			width: 340px;
+		}
+		.upload-img-list li{
+			float:left;
+			margin: 10px 5px 0 0;
+			width: 80px;
+			height: 80px;
+			cursor: pointer;
+			position: relative;
+		}
+		.upload-img-list li.loading{
+			background: url('images/loading.gif') no-repeat center;
+			border: 1px solid #ccc;
+		}
+		.upload-img-list li img{
+			width: 100%;
+			height:100%;
+		}
+	</style>
 </head>
 <body>
 	<!--[if lte IE 8]>
 	    <div class="error chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div>
 	<![endif]-->
 	
-	<button class="btn btn-danger" id="file_upload"></button>
+	<xmp theme="united">
+		### test
+	</xmp>
 	
-	<input type="file" name="" id="filebtn">
+	<div class="container">
+		<h1>已上传 0 张,还可以上传7张</h1>
+		<ul class="upload-img-list clearfix">
+			<li class="upload-btn">
+				<input type="file" name="file_upload" id="filebtn">
+			</li>
+		</ul>
+	</div>
+	
 
 
 
@@ -37,13 +76,50 @@
 
 	<!-- Markdown 渲染器 -->
 	<script src='../vender/strapdown.js'></script>
+	
 
 	<script>
 		$(document).ready(function(){
-			$('#filebtn').uploadify(
-				'swf'       : "uploadify.swf",
-				'uploader' : 'upload.php'
-			);
+			$('#filebtn').uploadify({
+				'swf'          	: "uploadify.swf",
+				'uploader'     	: 'upload.php',
+				'auto'				:  false,
+				'button'       	: "选择照片",
+				'height'       	: "80",
+				'width'        	: '80',
+				'buttonClass'  	: 'mybutton',
+				'buttonImage'		: 'images/add-photo-multi.png',
+				'queueID'      	: 'queue',
+				'uploadLimit'  	: 7,
+				'fileSizeLimit'   : '500kb',
+				'itemTemplate' 	: '\
+								        <div id="${fileID}" class="uploadify-queue-item">\
+									        	<div class="cancel">\
+									     			 <a href="javascript:$(\'#${instanceID}\').\
+													 uploadify(\'cancel\', \'${fileID}\')">X</a>\
+									        	</div>\
+									        <span class="fileName">${fileName} (${fileSize})</span>\
+									        <span class="data"></span>\
+								        </div>' ,
+				'onDialogClose'   :function(queueData){
+					 console.log('加入了:'   +queueData.filesQueued + 
+					 				 '选择了:'   +queueData.filesSelected　+ 
+					 				 '队列长度:' +queueData.queueLength　+
+			    					 "出错数:"   +queueData.filesErrored);
+				},			
+				'onUploadStart'	:function(file){
+					console.log("开始上传..." + file.name);    //这里注意对比和服务器端返回的文件名
+					var loadingButton = $('<li class="loading" />');
+					var insertTag = $('.upload-img-list li:last-child'); 
+					loadingButton.insertBefore(insertTag);
+				},
+				'onUploadSuccess' :function(file, data, response){
+					console.log(file.name + "-->" + data);
+					var tmp = $('.loading');
+					tmp.append("<img src='uploads/"+data+"'/>");
+					tmp.removeClass('loading');
+				}
+			});
 		});
 	</script>
 </body>

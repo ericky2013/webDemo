@@ -12,7 +12,7 @@
 
 	//截取文件扩展名
 	$ext = strchr($_FILES['pic']['name'],'.');
-	echo $ext;
+	// echo $ext;
 
 	//使用uniquid()获取唯一字符串 防止文件同名覆盖
 	//保存文件名

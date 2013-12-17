@@ -16,15 +16,15 @@ xmp, textarea {
   display: none;
 }
 
-xmp h1,h2,h3,h4 {
+h1,h2,h3,h4 {
   margin: 15px 0;
 }
 
-xmp pre {
+pre {
   margin: 20px 0;
 }
 
-xmp img {
+img {
   margin: 10px 0;
 }
 
