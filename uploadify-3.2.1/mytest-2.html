@@ -43,6 +43,10 @@
 			width: 100%;
 			height:100%;
 		}
+		#queue{
+			width: 100%;
+			height: 100%;
+		}
 	</style>
 </head>
 <body>
@@ -55,9 +59,12 @@
 	</xmp>
 	
 	<div class="container">
+		<div id="progress"></div><!--onUploadProgress事件使用-->
 		<h1>已上传 <span class="up_imgs_num">0</span> 张,还可以上传<span class="up_imgs_num">7</span>张</h1>
 		<ul class="upload-img-list clearfix">
-			<div id="queue"></div>
+			<li>
+				<div id="queue"></div>
+			</li>
 			<li class="upload-btn">
 				<input type="file" name="file_upload" id="filebtn">
 			</li>
@@ -82,6 +89,18 @@
 	<script>
 		$(document).ready(function(){
 			var up_imgs_num = $('.up_imgs_num');
+
+			//保留两位小数   
+         //功能：将浮点数四舍五入，取小数点后2位 返回的是百分比
+			function toDecimal(x) {  
+            var f = parseFloat(x);  
+            if (isNaN(f)) {  
+                return;  
+            }  
+            f = Math.round(x*100);  
+            return f;  
+        }  
+
 			$('#filebtn').uploadify({
 				'swf'          	: "uploadify.swf",
 				'uploader'     	: 'upload.php',
@@ -91,18 +110,19 @@
 				'width'        	: '80',
 				'buttonClass'  	: 'mybutton',
 				'buttonImage'		: 'images/add-photo-multi.png',
-				'queueID'      	: 'queue',
 				'uploadLimit'  	: 7,
+				'removeCompleted' :false,
+				'removeTimeout'   :10,
 				'fileSizeLimit'   : '5000kb',
+				'queueID'         : 'queue',
 				'itemTemplate' 	: '\
-								        <div id="${fileID}" class="uploadify-queue-item">\
-									        	<div class="cancel">\
-									     			 <a href="javascript:$(\'#${instanceID}\').\
-													 uploadify(\'cancel\', \'${fileID}\')">X</a>\
-									        	</div>\
-									        <span class="fileName">${fileName} (${fileSize})</span>\
-									        <span class="data"></span>\
-								        </div>' ,
+        								<div id="${fileID}" class="uploadify-queue-item">\
+								         <div class="cancel">\
+								     			 <a href="javascript:$(\'#${instanceID}\').\
+												 uploadify(\'cancel\', \'${fileID}\')">X</a>\
+								         </div>\
+							        		<span class="data"></span>\
+							        </div>' ,
 				'onDialogClose'   :function(queueData){
 					 console.log('加入了:'   +queueData.filesQueued + 
 					 				 '选择了:'   +queueData.filesSelected　+ 
@@ -120,11 +140,14 @@
 					var tmp = $('.loading');
 					tmp.append("<img src='uploads/"+data+"'/>");
 					tmp.removeClass('loading');
-
 					var uploadLimit = this.settings.uploadLimit;   //获取图片上传最大数量
 					up_imgs_num.eq(0).text( $('.upload-img-list').children('li').length - 1 );  //更新已上传图片数量
 					up_imgs_num.eq(1).text( uploadLimit - ($('.upload-img-list').children('li').length - 1));  //更新还可以上传的图片数量
-				}
+				},
+
+				'onUploadProgress' : function(file, bytesUploaded, bytesTotal, totalBytesUploaded, totalBytesTotal) {
+		            $('#progress').html(toDecimal(totalBytesUploaded / totalBytesTotal) + '%');
+		      }
 			});
 		});
 	</script>
