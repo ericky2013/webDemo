@@ -4,10 +4,9 @@
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-	<title>新浪微博表情 jQuery插件</title>
+	<title>bootstrap的一些demo</title>
 	<link rel="stylesheet" href="../lib/css/base_style.css"/>
 	<link rel="stylesheet" href="../lib/css/bootstrap.min.css"/>
-	<link rel="stylesheet" type="text/css" href="jquery.sinaEmotion.css" />
 	<!-- 结合selectivizr.js使IE8兼容css3选择器 注意它只对在单独的样式文件中有效 -->
 	<!--[if lt IE 9]>
 		<script src='../lib/css/html5Shiv.js'></script>
@@ -15,15 +14,33 @@
 		<script src='../lib/css/nwmatcher.js'></script>
 		<script src='../lib/css/selectivizr.js'></script>
 	<![endif]-->
+
 	<style>
-		#emotions .container{
-			width: 100%;
+		.mybutton{
+			background-color: transparent;
+			-webkit-border-radius: 0px;
+			-moz-border-radius: 0px;
+			border-radius: 0px;
+			border: 0px solid transparent;
 		}
-		#emotions .container a {
-			width: 30px;
-			height: 30px;
-			padding: 4px 2px;
-			margin: 7px 0 0 2px;
+		.upload-img-list{
+			width: 340px;
+		}
+		.upload-img-list li{
+			float:left;
+			margin: 10px 5px 0 0;
+			width: 80px;
+			height: 80px;
+			cursor: pointer;
+			position: relative;
+		}
+		.upload-img-list li.loading{
+			background: url('images/loading.gif') no-repeat center;
+			border: 1px solid #ccc;
+		}
+		.upload-img-list li img{
+			width: 100%;
+			height:100%;
 		}
 	</style>
 </head>
@@ -31,49 +48,46 @@
 	<!--[if lte IE 8]>
 	    <div class="error chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div>
 	<![endif]-->
+	
+	<xmp theme="united">
+		### bootstrap tooltip demo
+	</xmp>
+
 	<div class="container">
-		<div id="out" style="height:auto; width: 400px; border: 1px dashed #000000; padding: 10px;">
-			
-		</div>
-		<textarea class="emotion" cols="58" rows="5" style="font-size: 13px;"></textarea>
-		<br />
-		<a id="face" type="button" value="表情" href="#" class="btn btn-default">123</a>
-		<button id="analytic" type="button" value="解析" onClick="out()" >解析</button>
-		<br />
+		<a href="#" data-trigger="click" title="first tooltip" >click  me</a> <br>
+		<a href="#" data-trigger="hover" title="first tooltip" >Hover over me</a> <br>
+		<input type="text"  title="first tooltip@@@@" placeholder="focus me"  > <br>
+		<a href="#" data-trigger="manual" title="first tooltip" >manual  me</a> <br>
 	</div>
+	
 
-<!-- markdown 解析器  markdown文本包含在xmp标签中-->
-<xmp theme="united" style="display:none;">
-
-
-</xmp>
-
+	
 
 
 
 
 	<!-- javascript 文件  -->
 	<script src='../lib/js/jquery-1.10.2.min.js' ></script>
+	<script src='../lib/js/bootstrap.js' ></script>
 	<script src='../lib/js/bootstrap.min.js' ></script>
 	<script src='../lib/js/jquery.easing.1.3.js'></script>
 	<script src='../lib/js/jquery.mousewheel.js'></script>
-	<script type="text/javascript" src="jquery.sinaEmotion.js"></script>
 
 	<!-- Markdown 渲染器 -->
 	<script src='../vender/strapdown.js'></script>
+	
 
-	<script type="text/javascript">
-		// console.log($('.emotion').val());
-		// 绑定表情
-		$('#face').SinaEmotion($('.emotion'));
-		// console.log($('.emotion').val());
-
-		// 测试本地解析
-		function out() {
-			var inputText = $('.emotion').val();
-			// console.log($('.emotion').val());
-			$('#out').html(AnalyticEmotion(inputText));
-		}
+	<script>
+		$('a').tooltip();
+		$('input').tooltip({
+			placement: "right",
+			trigger: "manual",
+			container:"body",
+		}).blur(function(){
+			$(this).tooltip('show');
+		}).focus(function(){
+			$(this).tooltip('hide');
+		});
 	</script>
 </body>
 </html>

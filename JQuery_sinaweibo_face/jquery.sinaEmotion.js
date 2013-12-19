@@ -32,14 +32,15 @@ var uSinaEmotionsHt = new Hashtable();
 // 初始化缓存，页面仅仅加载一次就可以了
 $(function() {
 	var app_id = '1362404091';
+	// var app_id = '527071265';  //使用自己的app key  目前使用自己的app key还需要登录微博
 	$.ajax( {
 		dataType : 'jsonp',
 		url : 'https://api.weibo.com/2/emotions.json?source=' + app_id,
 		success : function(response) {
 			var data = response.data;
-			console.log(data);
+			//console.log(data);
 			for ( var i in data) {
-				// console.log(data[i]);
+				// //console.log(data[i]);
 				// return;
 				if (data[i].category == '') {
 					data[i].category = '默认';
@@ -53,14 +54,14 @@ $(function() {
 					icon : data[i].icon
 				});
 				uSinaEmotionsHt.put(data[i].phrase, data[i].icon);
-				// console.log(uSinaEmotionsHt._hash);
+				// //console.log(uSinaEmotionsHt._hash);
 
 			}
-			console.log(uSinaEmotionsHt._hash);
-			console.log(uSinaEmotionsHt.size());
-			console.log(uSinaEmotionsHt.get('[BOBO么么哒]'));
-			console.log(uSinaEmotionsHt.get('[886]'));
-			console.log(emotions);
+			//console.log(uSinaEmotionsHt._hash);
+			//console.log(uSinaEmotionsHt.size());
+			//console.log(uSinaEmotionsHt.get('[BOBO么么哒]'));
+			//console.log(uSinaEmotionsHt.get('[886]'));
+			//console.log(emotions);
 		}
 	});
 });
@@ -69,7 +70,7 @@ $(function() {
 function AnalyticEmotion(s) {
 	if(typeof (s) != "undefined") {
 		var sArr = s.match(/\[.*?\]/g);
-		console.log(sArr);
+		//console.log(sArr);
 		for(var i = 0; i < sArr.length; i++){
 			if(uSinaEmotionsHt.containsKey(sArr[i])) {
 				var reStr = "<img src=\"" + uSinaEmotionsHt.get(sArr[i]) + "\" height=\"22\" width=\"22\" />";
@@ -82,11 +83,11 @@ function AnalyticEmotion(s) {
 
 (function($){
 	$.fn.SinaEmotion = function(target){
-		console.log(target);
+		//console.log(target);
 		var cat_current;
 		var cat_page;
 		$(this).click(function(event){
-			console.log(this);
+			//console.log(this);
 			event.stopPropagation();
 			
 			var eTop = target.offset().top + target.height() + 15;
@@ -164,6 +165,8 @@ function AnalyticEmotion(s) {
 			$('#emotions .container').html('');
 			$('#emotions .page').html('');
 			cat_current = category;
+			// alert(123);
+			// alert(emotions[category].length);
 			for(var i = page * 72; i < (page + 1) * 72 && i < emotions[category].length; ++i){
 				$('#emotions .container').append($('<a href="javascript:void(0);" title="' + emotions[category][i].name + '"><img src="' + emotions[category][i].icon + '" alt="' + emotions[category][i].name + '" width="22" height="22" /></a>'));
 			}
