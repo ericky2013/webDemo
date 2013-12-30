@@ -1,0 +1,7 @@
+#ignore these files and folder
+*.dll
+*.psd
+videos/*
+others/*
+uploads/*
+BigTreeCMS-4.0.1/*
